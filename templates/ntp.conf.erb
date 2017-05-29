@@ -1,0 +1,8 @@
+driftfile /var/lib/ntp/drift
+restrict default kod nomodify notrap nopeer noquery
+restrict 127.0.0.1 
+<%- @servers.each do |server| -%>
+server <%= server %>
+<%- end -%>
+includefile /etc/ntp/crypto/pw
+keys /etc/ntp/keys

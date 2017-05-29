@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+
+  symlinks:
+    ntp: "#{source_dir}"
