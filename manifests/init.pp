@@ -1,19 +1,11 @@
 class ntp (
-  Array $servers,
+  Array $servers = $ntp::params::servers,
 ) {
-  package { 'ntp':
-    ensure => installed,
-  }
+  contain ntp::install
+  contain ntp::configure
+  contain ntp::service
 
-  file { '/etc/ntp.conf':
-    ensure  => file,
-    content => template("${module_name}/ntp.conf.erb"),
-    require => Package['ntp'],
-  }
-
-  service { 'ntp':
-    ensure    => running,
-    enable    => true,
-    subscribe => File['/etc/ntp.conf'],
-  }
+  Class['ntp::install']
+  -> Class['ntp::configure']
+  ~> Class['ntp::service']
 }

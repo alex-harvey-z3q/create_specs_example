@@ -56,7 +56,7 @@ keys /etc/ntp/keys
   it {
     is_expected.to compile.with_all_deps
     File.write(
-      'catalogs/ntp.after_stage1.json',
+      'catalogs/ntp.after_stage2.json',
       PSON.pretty_generate(catalogue)
     )
   }
