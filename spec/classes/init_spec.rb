@@ -20,9 +20,7 @@ describe 'ntp' do
   }
 
   it {
-    is_expected.to contain_file('/etc/ntp.conf').with({
-      'require' => 'Package[ntp]',
-    })
+    is_expected.to contain_file('/etc/ntp.conf')
   }
 
   [
@@ -49,9 +47,14 @@ keys /etc/ntp/keys
     is_expected.to contain_service('ntp').with({
       'ensure' => 'running',
       'enable' => 'true',
-      'subscribe' => 'File[/etc/ntp.conf]',
     })
   }
+
+  it 'classes and their relationships' do
+    is_expected.to contain_class('ntp::install').with({'before' => ['Class[Ntp::Configure]']})
+    is_expected.to contain_class('ntp::configure').with({'notify' => ['Class[Ntp::Service]']})
+    is_expected.to contain_class('ntp::service')
+  end
 
   it {
     is_expected.to compile.with_all_deps

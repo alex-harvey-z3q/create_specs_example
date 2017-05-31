@@ -1,5 +1,5 @@
 class ntp::service {
- service { 'ntpd':
+ service { 'ntp':
     ensure    => running,
     enable    => true,
   }
